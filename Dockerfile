@@ -1,7 +1,10 @@
 
 
-FROM openjdk:8
-EXPOSE 8086
-ADD /target/docker.jar docker.jar
-ENTRYPOINT ["java","-jar","/docker.jar"]
+
+FROM openjdk
+
+VOLUME /tmp
+ADD maven/${docker}.jar ${docker}.jar
+RUN sh -c 'touch /${docker}.jar'
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/${docker}.jar"]
 
